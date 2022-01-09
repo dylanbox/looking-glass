@@ -1,10 +1,11 @@
+const webpack = require("webpack");
 const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = (env, argv) => {
   const config = {
     mode: "production",
-    entry: "./src",
+    entry: ["./src"],
     target: "node",
     output: {
       path: path.resolve(__dirname, "dist"),
