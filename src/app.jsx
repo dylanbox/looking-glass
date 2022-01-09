@@ -1,5 +1,7 @@
-import { Text, Window, hot, View } from '@nodegui/react-nodegui';
+import { Window, hot, View } from '@nodegui/react-nodegui';
 import React from 'react';
+
+import Clock from './Clock';
 
 const minSize = {
   width: 500,
@@ -7,23 +9,19 @@ const minSize = {
 };
 
 const containerStyle = `
-  flex: 1; 
-`;
-
-const styleSheet = `
-  #welcome-text {
-    font-size: 24px;
-    padding-top: 20px;
-    qproperty-alignment: 'AlignHCenter';
-    font-family: 'sans-serif';
-  }
+  background-color: 'black';
+  height: '100%';
+  width: '100%';
+  display: flex;
+  align-items: 'center';
+  justify-content: 'center';
 `;
 
 function App() {
   return (
-    <Window windowTitle="Hello 👋🏽" minSize={minSize} styleSheet={styleSheet}>
+    <Window windowTitle="Hello 👋🏽" minSize={minSize}>
       <View style={containerStyle}>
-        <Text id="welcome-text">Welcome to NodeGui 🐕</Text>
+        <Clock />
       </View>
     </Window>
   );

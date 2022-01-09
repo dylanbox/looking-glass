@@ -5,11 +5,11 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = (env, argv) => {
   const config = {
     mode: 'production',
-    entry: ['./src'],
+    entry: ['./src/index.jsx'],
     target: 'node',
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: 'index.jsx',
+      filename: 'index.js',
     },
     module: {
       rules: [
@@ -50,7 +50,7 @@ module.exports = (env, argv) => {
     },
     plugins: [new CleanWebpackPlugin()],
     resolve: {
-      extensions: ['.js', '.jsx'],
+      extensions: ['.js', '.jsx', '.json'],
     },
   };
 
