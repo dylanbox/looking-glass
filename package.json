@@ -1,7 +1,7 @@
 {
   "name": "looking-glass",
   "version": "0.0.1",
-  "description": "",
+  "description": "Smart mirror system built on top of NodeGUI",
   "main": "index.js",
   "scripts": {
     "build": "npx webpack --node-env production && npx nodegui-packer --pack ./dist",
@@ -40,10 +40,26 @@
     "lint-staged": "^12.1.7",
     "native-addon-loader": "^2.0.1",
     "prettier": "2.5.1",
+    "semantic-release": "^18.0.1",
     "webpack": "^5.65.0",
     "webpack-cli": "^4.9.1"
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix"
+  },
+  "release": {
+    "branches": ["main"],
+    "plugins": [
+      "@semantic-release/commit-analyzer", 
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/github", {
+          "assets": [
+            {"path": "deploy/linux/*", "label": "Linux Distribution"},
+            {"path": "deploy/darwin/*", "label": "MacOS Distribution"}
+          ]
+        }
+      ]
+    ]
   }
 }
