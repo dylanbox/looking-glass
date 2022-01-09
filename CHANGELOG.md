@@ -1,5 +1,12 @@
 # Changelog:
 
+## [1.0.1](https://github.com/dylanbox/looking-glass/compare/v1.0.0...v1.0.1) (2022-01-09)
+
+
+### Fix
+
+* Explicit pathing for linux distro ([7e9da98](https://github.com/dylanbox/looking-glass/commit/7e9da98a46a5a6890928aa4835dde8b8038fdf77))
+
 # 1.0.0 (2022-01-09)
 
 
