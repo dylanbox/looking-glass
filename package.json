@@ -25,6 +25,8 @@
     "@babel/preset-env": "^7.16.7",
     "@babel/preset-react": "^7.16.7",
     "@nodegui/packer": "^1.5.0",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
     "babel-loader": "^8.2.3",
     "clean-webpack-plugin": "^4.0.0",
     "conventional-changelog-eslint": "^3.0.9",
@@ -48,6 +50,14 @@
   "lint-staged": {
     "*.js": "eslint --cache --fix"
   },
+  "babel": {
+    "presets": [
+      ["@babel/preset-env", { "targets": { "node": "12" } }],
+      "@babel/preset-react"
+    ],
+    "plugins": []
+  },
+  "prettier": {},
   "release": {
     "branches": [
       "main"
@@ -59,17 +69,38 @@
           "preset": "eslint"
         }
       ],
-      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/release-notes-generator",
+        {
+          "preset": "eslint"
+        }
+      ],
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogTitle": "# Changelog:"
+        }
+      ],
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "CHANGELOG.md",
+            "package.json",
+            "package-lock.json"
+          ]
+        }
+      ],
       [
         "@semantic-release/github",
         {
           "assets": [
             {
-              "path": "deploy/linux/*",
+              "path": "deploy/linux/build/LookingGlass.app",
               "label": "Linux Distribution"
             },
             {
-              "path": "deploy/darwin/*",
+              "path": "deploy/darwin/build/LookingGlass.dmg",
               "label": "MacOS Distribution"
             }
           ]

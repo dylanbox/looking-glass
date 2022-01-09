@@ -1,4 +1,4 @@
-name: CI
+name: Build and Publish
 
 on:
   push:
@@ -8,8 +8,12 @@ on:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout
@@ -21,12 +25,27 @@ jobs:
           node-version: 'lts/*'
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install Dependencies (Linux)
         run: |
           sudo apt-get install pkg-config build-essential
           sudo apt-get install cmake make
           sudo apt-get install mesa-common-dev libglu1-mesa-dev
-          npm ci
+        if: matrix.os == 'ubuntu-latest'
+      
+      - name: Install Dependencies (macOS)
+        run: |
+          brew install cmake
+          brew install make
+        if: matrix.os == 'macos-latest'
+
+      - name: Install node dependencies
+        run: npm ci
+      
+      - name: Init packer
+        run: npx nodegui-packer --init LookingGlass
+      
+      - name: Build distributions
+        run: npm run build
       
       - name: Release
         env:
