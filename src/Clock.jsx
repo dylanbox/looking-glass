@@ -1,7 +1,7 @@
 import { Text, View } from '@nodegui/react-nodegui';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
-import fonts from './fonts';
+import fonts from './fonts.js';
 
 const clockStyle = `
   #clock-wrapper {

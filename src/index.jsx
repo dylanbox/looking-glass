@@ -1,7 +1,7 @@
 /* eslint-disable import/no-import-module-exports */
 import { Renderer } from '@nodegui/react-nodegui';
 import React from 'react';
-import App from './App';
+import App from './App.jsx';
 
 process.title = 'Looking Glass';
 Renderer.render(<App />);
