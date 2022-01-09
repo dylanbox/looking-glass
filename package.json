@@ -52,7 +52,14 @@
   },
   "babel": {
     "presets": [
-      ["@babel/preset-env", { "targets": { "node": "12" } }],
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "12"
+          }
+        }
+      ],
       "@babel/preset-react"
     ],
     "plugins": []
@@ -96,12 +103,8 @@
         {
           "assets": [
             {
-              "path": "deploy/linux/build/LookingGlass.app",
-              "label": "Linux Distribution"
-            },
-            {
-              "path": "deploy/darwin/build/LookingGlass.dmg",
-              "label": "MacOS Distribution"
+              "path": "deploy/LookingGlass.AppImage",
+              "label": "Linux (x86_64) Distribution"
             }
           ]
         }

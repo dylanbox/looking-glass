@@ -10,19 +10,26 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-18.04, macos-latest]
+        # Removing macos-latest for now
+        os: [ubuntu-18.04]
     
     runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: 'lts/*'
-          cache: 'npm'
 
       - name: Install Dependencies (Linux)
         run: |
@@ -33,7 +40,7 @@ jobs:
           sudo apt-get install libxkbcommon-x11-0
         if: matrix.os == 'ubuntu-18.04'
       
-      - name: Install Dependencies (macOS)
+      - name: Install Dependencies (MacOS)
         run: |
           brew install cmake
           brew install make
@@ -46,7 +53,67 @@ jobs:
         run: npx nodegui-packer --init LookingGlass
       
       - name: Build distributions
-        run: QT_DEBUG_PLUGINS=1 npm run build
+        run: npm run build
+
+      - name: upload Linux artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: linux-build
+          path: deploy/linux/build/LookingGlass/Application-x86_64.AppImage
+        if: matrix.os == 'ubuntu-18.04'
+      
+      - name: upload MacOS artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: macos-build
+          path: deploy/darwin/build/LookingGlass.dmg
+        if: matrix.os == 'macos-latest'
+  
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/*'
+      
+      # TODO: Only install the semantic release dependencies
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install pkg-config build-essential
+          sudo apt-get install cmake make
+          sudo apt-get install mesa-common-dev libglu1-mesa-dev
+          sudo apt-get install libxkbcommon-x11-0
+      
+      - name: Install node dependencies
+        run: npm install
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with: 
+          path: artifacts/        
+
+      # Removing for now: ls -la artifacts/macos-build
+      - name: Check Paths
+        run: |
+          ls -la artifacts/linux-build
+
+      # Removing for now: mv artifacts/macos-build/LookingGlass.dmg deploy/LookingGlass.dmg
+      - name: Rename artifacts
+        run: |
+          mv artifacts/linux-build/Application-x86_64.AppImage deploy/LookingGlass.AppImage
       
       - name: Release
         env:
