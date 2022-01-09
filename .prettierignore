@@ -1,9 +1,6 @@
 node_modules
 dist/
-*.log
-.DS_Store
 
 # Ignore artifacts:
 build
 coverage
-.eslintcache

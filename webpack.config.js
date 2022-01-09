@@ -1,15 +1,15 @@
-const webpack = require("webpack");
-const path = require("path");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const webpack = require('webpack');
+const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = (env, argv) => {
   const config = {
-    mode: "production",
-    entry: ["./src"],
-    target: "node",
+    mode: 'production',
+    entry: ['./src'],
+    target: 'node',
     output: {
-      path: path.resolve(__dirname, "dist"),
-      filename: "index.js"
+      path: path.resolve(__dirname, 'dist'),
+      filename: 'index.jsx',
     },
     module: {
       rules: [
@@ -17,44 +17,50 @@ module.exports = (env, argv) => {
           test: /\.(j|t)sx?$/,
           exclude: /node_modules/,
           use: {
-            loader: "babel-loader",
-            options: { cacheDirectory: true, cacheCompression: false }
-          }
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true,
+              cacheCompression: false,
+            },
+          },
         },
         {
           test: /\.(png|jpe?g|gif|svg|bmp|otf)$/i,
           use: [
             {
-              loader: "file-loader",
-              options: { publicPath: "dist" }
-            }
-          ]
+              loader: 'file-loader',
+              options: {
+                publicPath: 'dist',
+              },
+            },
+          ],
         },
         {
           test: /\.node/i,
           use: [
             {
-              loader: "native-addon-loader",
-              options: { name: "[name]-[hash].[ext]" }
-            }
-          ]
-        }
-      ]
+              loader: 'native-addon-loader',
+              options: {
+                name: '[name]-[hash].[ext]',
+              },
+            },
+          ],
+        },
+      ],
     },
     plugins: [new CleanWebpackPlugin()],
     resolve: {
-      extensions: [".js", ".jsx"]
-    }
+      extensions: ['.js', '.jsx'],
+    },
   };
 
-  if (argv.mode === "development") {
-    config.mode = "development";
+  if (argv.mode === 'development') {
+    config.mode = 'development';
     config.plugins.push(new webpack.HotModuleReplacementPlugin());
-    config.devtool = "source-map";
+    config.devtool = 'source-map';
     config.watch = true;
-    config.entry.unshift("webpack/hot/poll?100");
+    config.entry.unshift('webpack/hot/poll?100');
   }
 
   return config;
 };
-

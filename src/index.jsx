@@ -6,16 +6,16 @@
   Main Loop
       Check pluging
 
-**/
-import { Renderer } from "@nodegui/react-nodegui";
-import React from "react";
-import App from "./app";
+* */
+const { Renderer } = require('@nodegui/react-nodegui');
+const React = require('react');
+const App = require('./app');
 
-process.title = "Looking Glass";
+process.title = 'Looking Glass';
 Renderer.render(<App />);
 // This is for hot reloading (this will be stripped off in production by webpack)
 if (module.hot) {
-  module.hot.accept(["./app"], function() {
+  module.hot.accept(['./app'], () => {
     Renderer.forceUpdate();
   });
 }
