@@ -27,6 +27,7 @@
     "@nodegui/packer": "^1.5.0",
     "babel-loader": "^8.2.3",
     "clean-webpack-plugin": "^4.0.0",
+    "conventional-changelog-eslint": "^3.0.9",
     "eslint": "^8.6.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.3.0",
@@ -48,19 +49,29 @@
     "*.js": "eslint --cache --fix"
   },
   "release": {
-    "branches": ["main"],
+    "branches": [
+      "main"
+    ],
     "plugins": [
-      [ 
-        "@semantic-release/commit-analyzer", {
+      [
+        "@semantic-release/commit-analyzer",
+        {
           "preset": "eslint"
         }
       ],
       "@semantic-release/release-notes-generator",
       [
-        "@semantic-release/github", {
+        "@semantic-release/github",
+        {
           "assets": [
-            {"path": "deploy/linux/*", "label": "Linux Distribution"},
-            {"path": "deploy/darwin/*", "label": "MacOS Distribution"}
+            {
+              "path": "deploy/linux/*",
+              "label": "Linux Distribution"
+            },
+            {
+              "path": "deploy/darwin/*",
+              "label": "MacOS Distribution"
+            }
           ]
         }
       ]
