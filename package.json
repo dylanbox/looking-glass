@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx webpack --node-env production",
+    "build": "npx webpack --node-env production && npx nodegui-packer --pack ./dist",
     "dev": "npx webpack --mode=development",
     "start": "qode ./dist/index.js",
     "debug": "qode --inspect ./dist/index.js",
@@ -24,6 +24,7 @@
     "@babel/core": "^7.16.7",
     "@babel/preset-env": "^7.16.7",
     "@babel/preset-react": "^7.16.7",
+    "@nodegui/packer": "^1.5.0",
     "babel-loader": "^8.2.3",
     "clean-webpack-plugin": "^4.0.0",
     "eslint": "^8.6.0",

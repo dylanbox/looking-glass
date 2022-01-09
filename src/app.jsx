@@ -19,7 +19,7 @@ const containerStyle = `
 
 function App() {
   return (
-    <Window windowTitle="Hello 👋🏽" minSize={minSize}>
+    <Window windowTitle="Looking Glass" minSize={minSize}>
       <View style={containerStyle}>
         <Clock />
       </View>
