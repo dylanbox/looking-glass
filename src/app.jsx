@@ -1,7 +1,7 @@
 import { Window, hot, View } from '@nodegui/react-nodegui';
 import React from 'react';
 
-import Clock from './Clock.jsx';
+import Clock from './Clock';
 
 const minSize = {
   width: 500,
