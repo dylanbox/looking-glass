@@ -21,7 +21,11 @@ jobs:
           node-version: 'lts/*'
       
       - name: Install dependencies
-        run: npm ci
+        run: |
+          sudo apt-get install pkg-config build-essential
+          sudo apt-get install cmake make
+          sudo apt-get install mesa-common-dev libglu1-mesa-dev
+          npm ci
       
       - name: Release
         env:
