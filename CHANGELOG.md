@@ -1,5 +1,16 @@
 # Changelog:
 
+## [1.0.2](https://github.com/dylanbox/looking-glass/compare/v1.0.1...v1.0.2) (2022-01-10)
+
+
+### Build
+
+* Package and deploy step ([27a7bfe](https://github.com/dylanbox/looking-glass/commit/27a7bfe3732c7e90af538c0e382e76b7529ee75c))
+
+### Fix
+
+* Pathing Capitalization ([088094e](https://github.com/dylanbox/looking-glass/commit/088094e2e3b09900c499c875ae542216cb70e404))
+
 ## [1.0.1](https://github.com/dylanbox/looking-glass/compare/v1.0.0...v1.0.1) (2022-01-09)
 
 
