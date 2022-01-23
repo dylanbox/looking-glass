@@ -18,7 +18,10 @@
     "@nodegui/nodegui": "^0.45.4",
     "@nodegui/react-nodegui": "^0.13.0",
     "date-fns": "^2.28.0",
-    "react": "^17.0.2"
+    "ical.js": "^1.5.0",
+    "lodash": "^4.17.21",
+    "react": "^17.0.2",
+    "tsdav": "^1.1.6"
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",
@@ -64,7 +67,10 @@
     ],
     "plugins": []
   },
-  "prettier": {},
+  "prettier": {
+    "singleQuote": true,
+    "parser": "flow"
+  },
   "release": {
     "branches": [
       "main"

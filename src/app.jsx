@@ -1,12 +1,10 @@
 import { Window, hot, View } from '@nodegui/react-nodegui';
 import React from 'react';
 
-import Clock from './Clock';
+import Clock from './modules/clock/Clock';
+import Calendar from './modules/calendar/Calendar';
 
-const minSize = {
-  width: 500,
-  height: 520,
-};
+const minSize = { width: 500, height: 520 };
 
 const containerStyle = `
   background-color: 'black';
@@ -22,6 +20,7 @@ function App() {
     <Window windowTitle="Looking Glass" minSize={minSize}>
       <View style={containerStyle}>
         <Clock />
+        <Calendar />
       </View>
     </Window>
   );

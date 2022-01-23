@@ -1,7 +1,7 @@
 import { Text, View } from '@nodegui/react-nodegui';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
-import fonts from './fonts';
+import fonts from '../../fonts';
 
 const clockStyle = `
   #clock-wrapper {
@@ -24,7 +24,7 @@ const clockStyle = `
 
   #detail-wrapper {
     flex-direction: column; 
-    justify-content: "center"; 
+    justify-content: 'center'; 
     padding-left: 10px
   }
   

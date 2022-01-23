@@ -1,0 +1,14 @@
+{
+  "credentials": {
+    "iCloud": {
+      "username": "MyUsername",
+      "password": "MyPassword"
+    }
+  },
+  "calendars": [
+    {
+      "type": "iCloud",
+      "url": "https://caldav.icloud.com/1234/calendars/ABC-123-456-DEFG/"
+    }
+  ]
+}

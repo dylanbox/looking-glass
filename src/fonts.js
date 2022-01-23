@@ -7,8 +7,8 @@ import BioRhymeRegular from './assets/fonts/BioRhyme_Expanded/BioRhymeExpanded-R
 import BioRhymeBold from './assets/fonts/BioRhyme_Expanded/BioRhymeExpanded-Bold.ttf';
 import BioRhymeExtraBold from './assets/fonts/BioRhyme_Expanded/BioRhymeExpanded-ExtraBold.ttf';
 
-import JosefinSans from './assets/fonts/Josefin_Sans/JosefinSans-VariableFont_wght.ttf';
-import JosefinSansItalic from './assets/fonts/Josefin_Sans/JosefinSans-Italic-VariableFont_wght.ttf';
+import JosefinSans from './assets/fonts/Josefin_Sans/static/JosefinSans-Regular.ttf';
+import JosefinSansItalic from './assets/fonts/Josefin_Sans/static/JosefinSans-Italic.ttf';
 
 /**
  * Adds a font to the application font database and returns its name
@@ -35,8 +35,8 @@ export default {
   // 800
   BioRhymeExtraBold: addFont(BioRhymeExtraBold),
   // ===== Josefin Sans =====
-  // 100 - 700
+  // 400
   JosefinSans: addFont(JosefinSans),
-  // 100 - 700
+  // 400
   JosefinSansItalic: addFont(JosefinSansItalic),
 };
