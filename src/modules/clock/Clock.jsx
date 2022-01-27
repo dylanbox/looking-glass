@@ -1,44 +1,19 @@
 import { Text, View } from '@nodegui/react-nodegui';
-import { format } from 'date-fns';
+import { format } from 'date-fns/esm';
 import React, { useEffect, useState } from 'react';
 import fonts from '../../fonts';
+import { StackedTime } from '../../components/index';
 
 const clockStyle = `
-  #clock-wrapper {
-    padding: 10;
-    flex: 1;
+  #clock {
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: 'center';
   }
 
-  #time-wrapper {
-    flex-direction: row;
-  }
-
-  #hours-minutes {
-    font-family: '${fonts.BioRhymeExtraBold}';
-    font-weight: 800;
-    font-size: 75px;
-  }
-
-  #detail-wrapper {
-    flex-direction: column; 
-    justify-content: 'center'; 
-    padding-left: 10px
-  }
-  
-  #seconds,
-  #am-pm {
-    font-family: '${fonts.JosefinSans}';
-    font-weight: 300;
-    font-size: 25px;
-  }
-
-  #date {
+  #clock--date {
     font-family: '${fonts.JosefinSans}';
     font-weight: 200;
-    font-size: 20px;
+    font-size: 20;
+    qproperty-alignment: AlignHCenter;
   }
 `;
 
@@ -56,19 +31,9 @@ function Clock() {
   }, [setCurrentTime]);
 
   return (
-    <View styleSheet={clockStyle}>
-      <View id="clock-wrapper">
-        <View id="time-wrapper">
-          <Text id="hours-minutes">{format(currentTime, 'hh:mm')}</Text>
-          <View id="detail-wrapper">
-            <Text id="seconds">{format(currentTime, 'ss')}</Text>
-            <Text id="am-m">{format(currentTime, 'a')}</Text>
-          </View>
-        </View>
-        <View>
-          <Text id="date">{format(currentTime, 'MMMM Lo')}</Text>
-        </View>
-      </View>
+    <View id="clock" styleSheet={clockStyle}>
+      <StackedTime datetime={currentTime} />
+      <Text id="clock--date">{format(currentTime, 'MMMM Lo')}</Text>
     </View>
   );
 }

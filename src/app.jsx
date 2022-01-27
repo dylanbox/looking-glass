@@ -4,21 +4,27 @@ import React from 'react';
 import Clock from './modules/clock/Clock';
 import Calendar from './modules/calendar/Calendar';
 
-const minSize = { width: 500, height: 520 };
-
-const containerStyle = `
-  background-color: 'black';
-  height: '100%';
-  width: '100%';
-  display: flex;
-  align-items: 'center';
-  justify-content: 'center';
-`;
+const minSize = { width: 720, height: 720 };
 
 function App() {
+  const stylesheet = `
+    #app--widgets {
+      background-color: 'black';
+      height: '100%';
+      width: '100%';
+      display: flex;
+      align-items: 'center';
+      justify-content: 'center';
+    }
+  `;
+
   return (
-    <Window windowTitle="Looking Glass" minSize={minSize}>
-      <View style={containerStyle}>
+    <Window
+      windowTitle="Looking Glass"
+      minSize={minSize}
+      styleSheet={stylesheet}
+    >
+      <View id="app--widgets">
         <Clock />
         <Calendar />
       </View>

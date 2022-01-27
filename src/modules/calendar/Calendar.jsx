@@ -1,29 +1,23 @@
 import _ from 'lodash';
 import {
   addDays,
-  formatRelative,
   getDaysInMonth,
+  isBefore,
+  compareAsc,
   isSameDay,
   lastDayOfMonth,
+  startOfHour,
   subDays,
-} from 'date-fns';
+} from 'date-fns/esm';
 import iCalJs from 'ical.js';
 import { Text, View } from '@nodegui/react-nodegui';
 import React, { useEffect, useState } from 'react';
 import store from '../../store/index';
+import EventDetail from './EventDetail';
 
 const calendarHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 const calendarStyle = `
-  #title {
-    color: #FFF;
-    font-size: 1.2em;
-    font-weight: bold;
-    border-bottom: 1px solid #FFFFFF;
-    padding-bottom: 2px;
-    margin-bottom: 5px;
-  }
-
   #event {
     flex-direction: column; 
   }
@@ -41,8 +35,8 @@ const calendarStyle = `
   
   #calendar {
     display: flex;
-    width: 280px;
-    height: 280px;
+    width: 294px;
+    height: 294px;
     flex-direction: row;
     flex-wrap: wrap;
   }
@@ -53,8 +47,8 @@ const calendarStyle = `
   #day-next-month,
   #day-last-month {
     font-size: 8px;
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     margin: 2px;
   }
     
@@ -85,6 +79,19 @@ const calendarStyle = `
   #day-next-month,
   #day-last-month {
     color: #555555;
+  }
+
+  #upcoming-events-title {
+    color: #FFF;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-bottom: 1px solid #FFFFFF;
+    padding-bottom: 2px;
+    margin-bottom: 5px;
+  }
+
+  #upcoming-events {
+    width: 294px;
   }
 `;
 
@@ -118,7 +125,6 @@ function Calendar() {
       let calendarObjectsByCalendar = await Promise.all(
         _.get(store, 'config.calendars', []).map(({ url }) => {
           const calendar = store.iCloud.findCalendar({ url });
-          console.log('calendar', calendar);
           return store.iCloud.fetchCalendarObjects(calendar, {
             start: startDate,
             end: endDate,
@@ -133,13 +139,16 @@ function Calendar() {
         return new iCalJs.Event(vCalendar.getFirstSubcomponent('vevent'));
       });
 
-      setCalendarEvents(calendarObjectsByCalendar);
-      console.log(
-        calendarObjectsByCalendar.map((event) => ({
-          startDate: event.startDate.toJSDate(),
-          summary: event.summary,
-        }))
+      // eslint is throwing a tantrum here
+      calendarObjectsByCalendar = _.sortBy(
+        calendarObjectsByCalendar,
+        (event) =>
+          // eslint-disable-next-line implicit-arrow-linebreak
+          event.startDate.toJSDate()
+        // eslint-disable-next-line function-paren-newline
       );
+
+      setCalendarEvents(calendarObjectsByCalendar);
       // Calendar Update Interval
       // const timeInterval = setInterval(async () => {
       //   const calendars = await store.iCloud.fetchCalendars();
@@ -233,9 +242,23 @@ function Calendar() {
 
   const calendarDays = getCalendarDays(currentTime);
 
+  // Get a list of events to show in more detail
+  const eventDetail = [];
+  const startOfEventDetails = _.findIndex(
+    calendarEvents,
+    (event) =>
+      isBefore(currentTime, event.endDate.toJSDate()) ||
+      // If the start of hour is equal to or before the start time
+      compareAsc(startOfHour(currentTime), event.startDate.toJSDate()) < 1
+  );
+  if (startOfEventDetails > -1) {
+    eventDetail.push(
+      ...calendarEvents.slice(startOfEventDetails, startOfEventDetails + 10)
+    );
+  }
+
   return (
     <View styleSheet={calendarStyle}>
-      <Text id="title">Calendar</Text>
       <View id="calendar-wrapper">
         <View id="calendar">
           <>
@@ -254,17 +277,20 @@ function Calendar() {
           </>
         </View>
       </View>
+      {eventDetail.length ? (
+        <View id="upcoming-events-wrapper">
+          <Text id="upcoming-events-title">Upcoming Events:</Text>
+          <View id="upcoming-events">
+            {eventDetail.map((event) => (
+              <View key={event.uid}>
+                <EventDetail event={event} />
+              </View>
+            ))}
+          </View>
+        </View>
+      ) : null}
     </View>
   );
 }
-
-// {calendarEvents.map((event) => (
-//   <View id="event" key={event.uid}>
-//     <Text id="date">
-//       {formatRelative(event.startDate.toJSDate(), new Date())}
-//     </Text>
-//     <Text id="summary">{event.summary}</Text>
-//   </View>
-// ))}
 
 export default Calendar;
